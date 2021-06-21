@@ -69,7 +69,9 @@
             url = `${baseURL}?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=`
             let data = document.getElementsByClassName("scopes_select")
             for(var i=0;i<data.length;i++){
-                url = `${url}${data[i].value}+`
+                if (data[i].checked) {
+                    url = `${url}${data[i].value}+`
+                }
             }
             url = url.replace(/\+$/g, "");
             console.log(url)
