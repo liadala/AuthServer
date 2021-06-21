@@ -4,9 +4,77 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/w3.css"> 
+    <title>Request Auth</title>
 </head>
 <body>
-    <a href="https://id.twitch.tv/oauth2/authorize?client_id=yq4lgnxkdw55eqowxtl07hah1ewzr8&redirect_uri=http://localhost/auth&response_type=code&scope=viewing_activity_read">login</a>
+    <div class="w3-container w3-margin">
+        <div class="w3-container w3-card-4 w3-padding-16">
+            <h2>Scopes</h2>
+            <div id="scopes_list"></div>
+            <a onclick="submit()" class="w3-btn w3-black">Submit</a>
+        </div>
+    </div>
+    <script>
+        (function(){
+            let scopes = [
+            "analytics:read:games",
+            "bits:read",
+            "channel:edit:commercial",
+            "channel:manage:broadcast",
+            "channel:manage:extensions",
+            "channel:manage:polls",
+            "channel:manage:predictions",
+            "channel:manage:redemptions",
+            "channel:manage:schedule",
+            "channel:manage:videos",
+            "channel:read:editors",
+            "channel:read:hype_train",
+            "channel:read:polls",
+            "channel:read:predictions",
+            "channel:read:redemptions",
+            "channel:read:stream_key",
+            "channel:read:subscriptions",
+            "clips:edit",
+            "moderation:read",
+            "moderator:manage:automod",
+            "user:edit",
+            "user:edit:follows",
+            "user:manage:blocked_users",
+            "user:read:blocked_users",
+            "user:read:broadcast",
+            "user:read:email",
+            "user:read:follows",
+            "user:read:subscriptions"
+            ]
+            let scopes_list = document.getElementById("scopes_list")
+            scopes.forEach(element => {
+                let p = document.createElement("p")
+                let inp = document.createElement("input")
+                inp.type = "checkbox"
+                inp.classList.add("w3-check", "scopes_select")
+                inp.value = element
+                inp.checked = true
+                let lab = document.createElement("label")
+                lab.innerText = ` ${element}`
+                scopes_list.appendChild(p)
+                p.appendChild(inp)
+                p.appendChild(lab)
+            });
+        })();
+        function submit(){
+            baseURL     = "https://id.twitch.tv/oauth2/authorize"
+            clientId    = "yq4lgnxkdw55eqowxtl07hah1ewzr8"
+            redirectUri = "http://localhost/auth"
+            url = `${baseURL}?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=`
+            let data = document.getElementsByClassName("scopes_select")
+            for(var i=0;i<data.length;i++){
+                url = `${url}${data[i].value}+`
+            }
+            url = url.replace(/\+$/g, "");
+            console.log(url)
+            window.location.href = url;
+        }
+    </script>
 </body>
 </html>
