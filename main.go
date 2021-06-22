@@ -5,7 +5,14 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 )
+
+var rateLimit struct {
+	RateLimit_Limit     int
+	RateLimit_Remaining int
+	RateLimit_Reset     int
+}
 
 func main() {
 	var (
@@ -19,8 +26,26 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Println("Start Token Gateway")
+	log.Println("Start Token Gateway", config)
 	go startWebserver()
+
+	go func() {
+		log.Println("Starting Ratelimit Handler", config.HttpRequest.RateLimit)
+		if config.HttpRequest.RateLimit > 0 {
+
+			rateLimit.RateLimit_Limit = config.HttpRequest.RateLimit
+			rateLimit.RateLimit_Remaining = config.HttpRequest.RateLimit
+			rateLimit.RateLimit_Reset = 0
+			for {
+				if rateLimit.RateLimit_Remaining < rateLimit.RateLimit_Limit {
+					rateLimit.RateLimit_Remaining += 1
+					rateLimit.RateLimit_Reset = ((rateLimit.RateLimit_Limit - rateLimit.RateLimit_Remaining) / config.HttpRequest.RegenerateRate)
+					log.Printf("\nLimit: %d\nRemaining: %d\nRegenerate: %d\n", rateLimit.RateLimit_Limit, rateLimit.RateLimit_Remaining, rateLimit.RateLimit_Reset)
+				}
+				time.Sleep(1 * time.Second)
+			}
+		}
+	}()
 
 	// Wait for Terminate Process
 	log.Println("press CTRL-C to exit")

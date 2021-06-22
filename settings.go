@@ -6,9 +6,18 @@ import (
 )
 
 type configStruct struct {
-	ClientId     string
-	ClientSecret string
-	RedirectURL  string
+	Twitch struct {
+		Api struct {
+			ClientId         string   `json:"clientid"`
+			ClientSecret     string   `json:"clientsecret"`
+			RedirectURL      string   `json:"redirecturl"`
+			AviableScopeList []string `json:"aviablescopelist"`
+		} `json:"api"`
+	} `json:"twitch:"`
+	HttpRequest struct {
+		RateLimit      int `json:"ratelimit"`
+		RegenerateRate int `json:"regeneraterate"`
+	} `json:"httprequest"`
 }
 
 var config configStruct
