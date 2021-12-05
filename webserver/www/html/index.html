@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Auth</title>
+    <link rel="stylesheet" href="static/w3.css">
+</head>
+<body>
+    <div>
+        <div class="w3-container w3-margin">
+            <div class="w3-container w3-card-4 w3-padding-16">
+                <h2>Scopes</h2>
+                {{range $element := .Scopes}}<p>
+                    <input type="checkbox" class="w3-check scopes_select" checked value="{{$element}}">
+                    <label> {{$element}}</label>
+                </p>
+                {{end}}
+                <div id="scopes_list"></div>
+                <a onclick="submit()" class="w3-btn w3-black">Submit</a>
+            </div>
+        </div>
+        <script>
+            function submit(){
+                baseURL     = "https://id.twitch.tv/oauth2/authorize"
+                clientId    =  "{{ .ClientId }}"
+                redirectUri = "{{ .RedirectURL }}"
+                url = `${baseURL}?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=`
+                let data = document.getElementsByClassName("scopes_select")
+                for(var i=0;i<data.length;i++){
+                    if (data[i].checked) {
+                        url = `${url}${data[i].value}+`
+                    }
+                }
+                url = url.replace(/\+$/g, "");
+                console.log(url)
+                window.location.href = url;
+            }
+        </script>
+    </div>
+</body>
+</html>

@@ -1,7 +1,8 @@
-package main
+package config
 
 import (
 	"encoding/json"
+	"log"
 	"os"
 )
 
@@ -20,17 +21,15 @@ type configStruct struct {
 	} `json:"httprequest"`
 }
 
-var config configStruct
+var Config configStruct
 
-func loadConfig(path string) (configStruct, error) {
+func Load(path string) {
 	file, err := os.ReadFile(path)
 	if err != nil {
-		return configStruct{}, err
+		log.Fatal(err)
 	}
-	var jsondata configStruct
-	err = json.Unmarshal(file, &jsondata)
+	err = json.Unmarshal(file, &Config)
 	if err != nil {
-		return configStruct{}, err
+		log.Fatal(err)
 	}
-	return jsondata, nil
 }
