@@ -3,7 +3,7 @@
 		"api":{
 			"clientid":"<Client ID>",
 			"clientsecret":"<Client Secret>",
-			"redirecturl":"<Redirect URL>",
+			"redirecturl":"http://localhost/api/create",
             "aviablescopelist": [
                 "analytics:read:extensions",
                 "analytics:read:games",
