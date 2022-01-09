@@ -1,2 +1,2 @@
 # AuthServer
-a auth server for twitch written in go
+host your own twitch token generator
