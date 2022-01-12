@@ -1,8 +1,12 @@
 {
+    "web":{
+        "port":8080,
+        "ip":"127.0.0.1"
+    },
 	"twitch:":{
 		"api":{
-			"clientid":"<Client ID>",
-			"clientsecret":"<Client Secret>",
+			"clientid":"<secret>",
+			"clientsecret":"<secret>",
 			"redirecturl":"http://localhost/api/create",
             "aviablescopelist": [
                 "analytics:read:extensions",

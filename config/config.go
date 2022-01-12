@@ -14,11 +14,11 @@ type configStruct struct {
 			RedirectURL      string   `json:"redirecturl"`
 			AviableScopeList []string `json:"aviablescopelist"`
 		} `json:"api"`
-	} `json:"twitch:"`
-	HttpRequest struct {
-		RateLimit      int `json:"ratelimit"`
-		RegenerateRate int `json:"regeneraterate"`
-	} `json:"httprequest"`
+	} `json:"twitch"`
+	Web struct {
+		Listen string `json:"ip"`
+		Port   int    `json:"port"`
+	} `json:"web"`
 }
 
 var Config configStruct

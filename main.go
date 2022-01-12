@@ -19,7 +19,7 @@ func main() {
 		ClientID:     config.Config.Twitch.Api.ClientId,
 		ClientSecret: config.Config.Twitch.Api.ClientSecret,
 		RedirectURI:  config.Config.Twitch.Api.RedirectURL,
-	})
+	}, fmt.Sprintf("%s:%d", config.Config.Web.Listen, config.Config.Web.Port))
 
 	// This prevents the process from exiting
 	fmt.Println("Software is running. Press CTRL-C to exit.")

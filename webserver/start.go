@@ -27,7 +27,7 @@ var (
 	twitch *helix.Client
 )
 
-func Start(options *helix.Options) {
+func Start(options *helix.Options, listen string) {
 	var err error
 	twitch, err = helix.NewClient(options)
 	if err != nil {
@@ -129,7 +129,7 @@ func Start(options *helix.Options) {
 	})
 
 	srv := &http.Server{
-		Addr:         ":80",
+		Addr:         listen,
 		Handler:      router,
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
